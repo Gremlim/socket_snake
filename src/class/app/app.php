@@ -3,6 +3,10 @@ namespace app;
 
 // Clase principal del juego en el que crea un demonio con el servidor corriendo
 // continuamente y realiza/crea los juegos por cada grupo de clientes conectados.
+
+// Para iniciarlo hay que pasarle como parametros la IP o hostname del servidor y 
+// el puerto por el que se va a comunicar el servidor por TCP. Como parametro opcional
+// se le puede pasar tambien el numero de jugadores que tendrá cada sala
 class app{
 
 	public $socket;
@@ -21,7 +25,7 @@ class app{
 	private $socket_ip;
 	private $socket_port;
 
-	public function __construct($_ip=null,$_port=null,$_pl_by_game=2){
+	public function __construct($_ip,$_port,$_pl_by_game=2){
 		
 		$this->players_by_game=$_pl_by_game;
 		$this->socket_ip=$_ip;

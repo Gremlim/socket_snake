@@ -9,7 +9,13 @@ $jugadores=3;
 $ip='93.93.69.12'; 
 $puerto='10555'; 
 
-$usage='php server.php [-i IP] [-p PORT] [-j PLAYERS]'.PHP_EOL;
+$usage=<<<U
+USAGE: php server.php [-i IP] [-p PORT] [-j PLAYERS]
+	-i	IP from server
+	-p	Open port in server to comunicate by TCP
+	-j	Number of players for room. MAX: 9
+
+U;
 
 if($argc>1){
 	$params=0;
@@ -34,14 +40,14 @@ if($argc>1){
 			case '-j': $jugadores=$next; break;
 			default:
 				if(substr($arg,0,1)==='-'){
-					die($usage);
+					die("ERROR: Invalid parameter '$arg'...".PHP_EOL.$usage);
 				}				
 			break;
 		}
 	}
 
 	if(0===$params || $values!==$params){
-		die($usage);
+		die("ERROR: invalid parameters...".PHP_EOL.$usage);
 	}
 }
 
