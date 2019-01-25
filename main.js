@@ -1,5 +1,14 @@
+
 let sock=null;
 let w_width;
+let socket_ip = '93.93.69.12';
+let socket_port = 10555;
+
+document.addEventListener('DOMContentLoaded', function () {
+	// construct_world(70, 70);
+}, false);
+
+
 function get_by_id(_id) {
 
 	let res=document.getElementById(_id);
@@ -31,7 +40,8 @@ document.onkeydown = function(evt) {
 };
 function connect(){
 
-	sock=new WebSocket("ws://93.93.69.12:10555");
+	sock=new WebSocket("ws://"+socket_ip+":"+socket_port);
+
 	sock.onopen = function (event) {
 		get_by_id('disconnect').className='';
 		get_by_id('start').className='';
@@ -68,25 +78,7 @@ function connect(){
 		let table;
 
 		if(data.world){
-			// <table id="game_table">
-			// 	<tbody></tbody>
-			// </table>
-
-			if(document.getElementById('game_table')){
-				get_by_id('game_table').remove();
-			}
-			table=document.createElement('table');
-			table.id='game_table';
-			w_width=data.world.width;
-			for(let y=0; y < data.world.height; y++){
-				table.appendChild(document.createElement('tr'));
-				for(let x=0; x < data.world.width; x++) {
-					table.rows[y].appendChild(document.createElement('td'));
-					table.rows[y].cells[x].innerHTML='&nbsp;';
-					table.rows[y].cells[x].className="p0";
-				}
-			}
-			get_by_id('game-board').appendChild(table);
+			construct_world(data.world.width, data.world.height);		
 		}
 
 		if(data.game){
@@ -105,7 +97,23 @@ function connect(){
 
 	
 }
-
+function construct_world(max_x,max_y){
+	if (document.getElementById('game_table')) {
+		get_by_id('game_table').remove();
+	}
+	table = document.createElement('table');
+	table.id = 'game_table';
+	w_width = max_x;
+	for (let y = 0; y < max_y; y++) {
+		table.appendChild(document.createElement('tr'));
+		for (let x = 0; x < max_x; x++) {
+			table.rows[y].appendChild(document.createElement('td'));
+			table.rows[y].cells[x].innerHTML = '&nbsp;';
+			table.rows[y].cells[x].className = "p0";
+		}
+	}
+	get_by_id('game-board').appendChild(table);
+}
 function start() {
 	sock.send('START');
 	get_by_id('start').className='hidd';

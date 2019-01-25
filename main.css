@@ -1,12 +1,21 @@
 #game_table {
+	font-size:0.3em;
 	margin:auto;
-	border:1px solid gray;
+	border-collapse: separate;
+	background:lightgray;
+	box-shadow: 
+	    0 0 0 10px hsl(209, 100%, 26%),
+		0 0 0 15px hsla(192, 91%, 34%, 0.747),
+		0 0 0 20px hsla(199, 56%, 57%, 0.719),
+		0 0 0 25px hsla(192, 48%, 63%, 0.541),
+		0 0 0 30px hsla(196, 100%, 95%, 0.192);
 }
 #game_table td{
 	width:1em;
 	height:1em;
 }
-.p0{background:darkgray;}
+.p-1{background:darkslategray;}
+.p0{background:gray;}
 .p1{background:#0087FF;}
 .p2{background:#FF8800;}
 .p3{background:#65FF00;}
@@ -16,7 +25,6 @@
 .p7{background:#FF00A9;}
 .p8{background:#FF0000;}
 .p9{background:#000000;}
-
 
 .hidd{
 	display:none;
@@ -40,6 +48,7 @@
 }
 .selector.active{
 	background: rgb(255, 255, 132);
+	border: 1px solid darkgoldenrod;
 }
 .selector{
 	display: inline-block;
