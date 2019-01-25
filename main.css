@@ -49,6 +49,8 @@
 .selector.active{
 	background: rgb(255, 255, 132);
 	border: 1px solid darkgoldenrod;
+	font-size:1.5em;
+	padding:1em;
 }
 .selector{
 	display: inline-block;
