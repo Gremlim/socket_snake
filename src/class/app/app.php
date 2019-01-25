@@ -25,11 +25,13 @@ class app{
 	private $socket_ip;
 	private $socket_port;
 
-	public function __construct($_ip,$_port,$_pl_by_game=2){
+	public function __construct($_ip,$_port,$_pl_by_game=2,$_world_width=50,$_world_height=50){
 		
 		$this->players_by_game=$_pl_by_game;
 		$this->socket_ip=$_ip;
 		$this->socket_port=$_port;
+		$this->world_width=$_world_width;
+		$this->world_height=$_world_height;
 
 		if(null===$this->socket_ip){
 			throw new \Exception("IP '$this->socket_ip' not exists");

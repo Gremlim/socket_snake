@@ -8,12 +8,15 @@ require_once('autoload.php');
 $jugadores=3;
 $ip='93.93.69.12'; 
 $puerto='10555'; 
+$w=50;
+$h=50;
 
 $usage=<<<U
-USAGE: php server.php [-i IP] [-p PORT] [-j PLAYERS]
+USAGE: php server.php [-i IP] [-p PORT] [-j PLAYERS] [-s WxH]
 	-i	IP from server
 	-p	Open port in server to comunicate by TCP
 	-j	Number of players for room. MAX: 9
+	-s	Size of world. Width x Height
 
 U;
 
@@ -38,6 +41,7 @@ if($argc>1){
 			case '-i': $ip=$next; break;
 			case '-p': $puerto=$next; break;
 			case '-j': $jugadores=$next; break;
+			case '-s': list($w,$h)=explode('x',$next); break;
 			default:
 				if(substr($arg,0,1)==='-'){
 					die("ERROR: Invalid parameter '$arg'...".PHP_EOL.$usage);
@@ -52,7 +56,7 @@ if($argc>1){
 }
 
 try{
-	$game= new \app\app($ip,$puerto,$jugadores);
+	$game= new \app\app($ip,$puerto,$jugadores,$w,$h);
 	$game->init();
 }catch(\Exception $e){
 	echo 'ERROR: '.$e->getMessage().PHP_EOL;
