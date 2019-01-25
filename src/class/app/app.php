@@ -14,16 +14,32 @@ class app{
 	private $time=0;
 	private $running=false;
 
-	const world_width=30;
-	const world_height=30;
+	private $world_width=30;
+	private $world_height=30;
 
-	const players_by_game=3; // Maximo de 9 Jugadores
+	private $players_by_game; // Maximo 9 Jugadores
+	private $socket_ip;
+	private $socket_port;
 
-	public function __construct(){
-	
+	public function __construct($_ip=null,$_port=null,$_pl_by_game=2){
+		
+		$this->players_by_game=$_pl_by_game;
+		$this->socket_ip=$_ip;
+		$this->socket_port=$_port;
+
+		if(null===$this->socket_ip){
+			throw new \Exception("IP '$this->socket_ip' not exists");
+		}
+		if(null===$this->socket_port){
+			throw new \Exception("PORT '$this->socket_port' not exists");
+		}
+		if($this->players_by_game>9){
+			throw new \Exception("The number of players must be less than 9.");
+		}
+
 		$this->sock_time=new \socket\stream_time(0,100000);
 		$this->wait_time=($this->sock_time->microseconds/1000000)+$this->sock_time->seconds;
-		$this->socket=new \socket\websocket_server('10555','93.93.69.12','tcp',$this->sock_time);
+		$this->socket=new \socket\websocket_server($this->socket_port,$this->socket_ip,'tcp',$this->sock_time);
 		$this->lobby=new \logics\lobby($this->socket);
 		
 	}
@@ -43,7 +59,7 @@ class app{
 				$current_client_data=$this->socket->poll();			
 				$available_peers=$this->execute_lobby($current_client_data);
 
-				if(count($available_peers) >= self::players_by_game){
+				if(count($available_peers) >= $this->players_by_game){
 					$this->generate_instances($available_peers);
 				}
 				
@@ -64,10 +80,10 @@ class app{
 		$this->running=false;
 	}
 
-	// Genera la instancia de juego con self::players_by_game jugadores 
+	// Genera la instancia de juego con $this->players_by_game jugadores 
 	// aleatorios entre todos los disponibles
 	private function generate_instances($_available_peers){
-		$shuffle=array_rand($_available_peers, self::players_by_game);
+		$shuffle=array_rand($_available_peers, $this->players_by_game);
 		$players=[];
 		foreach($shuffle as $peer){
 			$players[$peer]=$_available_peers[$peer];
@@ -84,7 +100,7 @@ class app{
 		
 		$this->instances[]=new \app\instance(
 			$_clients,
-			new \app\world(self::world_width,self::world_height)
+			new \app\world($this->world_width,$this->world_height)
 		);
 	}
 
