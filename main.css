@@ -2,7 +2,7 @@
 	font-size:0.3em;
 	margin:auto;
 	border-collapse: separate;
-	background:lightgray;
+	background:white;
 	box-shadow: 
 	    0 0 0 10px hsl(209, 100%, 26%),
 		0 0 0 15px hsla(192, 91%, 34%, 0.747),
@@ -15,7 +15,7 @@
 	height:1em;
 }
 .p-1{background:darkslategray;}
-.p0{background:gray;}
+.p0{background:lightgray;}
 .p1{background:#0087FF;}
 .p2{background:#FF8800;}
 .p3{background:#65FF00;}
